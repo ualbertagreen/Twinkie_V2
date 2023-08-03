@@ -1,0 +1,42 @@
+/ {
+	chosen {
+		zephyr,shell_uart = &cdc_acm_uart0;
+		zephyr,console = &cdc_acm_uart1;
+	};
+
+	cc_config {
+		compatible = "gpio-leds";
+		cc1_en: cc1en {
+			gpios = <&gpiob 2 GPIO_ACTIVE_HIGH>;
+			label = "CC1_EN";
+		};
+
+		cc2_en: cc2en {
+			gpios = <&gpiob 13 GPIO_ACTIVE_HIGH>;
+			label = "CC2_EN";
+		};
+	};
+	
+	aliases {
+		encc1 = &cc1_en;
+		encc2 = &cc2_en;
+	};
+};
+
+zephyr_udc0: &usb {
+	/* Twinkie V2 Command Shell */
+	cdc_acm_uart0: cdc_acm_uart0 {
+		compatible = "zephyr,cdc-acm-uart";
+		label = "CDC_ACM_0";
+	};
+
+	/* Twinkie V2 Packet Logging */
+	cdc_acm_uart1: cdc_acm_uart1 {
+		compatible = "zephyr,cdc-acm-uart";
+		label = "CDC_ACM_1";
+	};
+
+	pinctrl-0 = <&usb_dm_pa11 &usb_dp_pa12>;
+	pinctrl-names = "default";
+	status = "okay";
+};
