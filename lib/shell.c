@@ -69,7 +69,7 @@ static int cmd_version(const struct shell *shell, size_t argc, char**argv) {
 	ARG_UNUSED(argc);
 	ARG_UNUSED(argv);
 
-	shell_print(shell, "Twinkie version 2.2.0");
+	shell_print(shell, "Twinkie version 2.2.1");
 
 	return 0;
 }
@@ -202,9 +202,24 @@ SHELL_CMD_REGISTER(auto_stop, &cmd_auto_stop_options, "Sets to automatically tur
 static int cmd_sleep_time(const struct shell *shell, size_t argc, char**argv, void* data) {
 	if (argc == 2) {
 		set_sleep_time(atoi(argv[1]));
+		shell_print(shell, "%d", atoi(argv[1]));
 	}
 
 	return 0;
 }
 
 SHELL_CMD_REGISTER(sleep_time, NULL, "Sets console output as continuous or only on receiving PD messages", cmd_sleep_time);
+
+static int cmd_status(const struct shell *shell, size_t argc, char**argv) {
+
+	char p[50];
+
+	print_status(p, 0);
+	shell_print(shell, "%s", p);
+	print_status(p, 1);
+	shell_print(shell, "%s", p);
+
+	return 0;
+}
+
+SHELL_CMD_REGISTER(status, NULL, "Print the twinkie status", cmd_status);

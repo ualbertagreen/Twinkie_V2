@@ -1,9 +1,9 @@
 common:
   tags: extensibility
-  integration_platforms:
-    - custom_plank
-    - qemu_cortex_m0
+  platform_allow:
+    - google_twinkie_v2
 tests:
-  lib.custom_lib: {}
-  lib.custom_lib.non_default:
-    extra_args: CONFIG_CUSTOM_LIB_GET_VALUE_DEFAULT=6
+  lib.custom_lib: 
+    extra_dtc_overlay_files:
+    - ./boards/twinkie.overlay
+

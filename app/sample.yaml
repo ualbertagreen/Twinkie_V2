@@ -7,10 +7,7 @@ sample:
 common:
   build_only: true
   integration_platforms:
-    - custom_plank
-    - nucleo_f302r8
+    - google_twinkie_v2
 tests:
   app.default: {}
-  app.debug:
-    extra_overlay_confs:
-      - debug.conf
+

@@ -36,4 +36,13 @@ int view_set_connection(snooper_mask_t vc);
  */
 snooper_mask_t get_view_snoop();
 
+/**
+ * @brief Initializes the snooper view
+ *
+ * @param dev pointer to the Twinkie device
+ *
+ * @return 0 on success
+ */
+int view_init();
+
 #endif

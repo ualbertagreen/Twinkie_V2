@@ -60,6 +60,13 @@ void set_sleep_time(uint32_t st);
 void set_auto_stop(bool s);
 
 /**
+ * @brief Print to shell the current status of the Twinkie
+ *
+ * @param ret char array for output of status
+ */
+void print_status(char *ret, int i);
+
+/**
  * @brief Used only for sharing isr
  */
 void ucpd_isr(void);

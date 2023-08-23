@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include <stdio.h>
 #include <string.h>
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/gpio.h>
@@ -164,6 +165,17 @@ void set_auto_stop(bool s) {
 	model.auto_stop = s;
 }
 
+void print_status(char *ret, int i) {
+	switch (i) {
+	case 0:
+		sprintf(ret, "Twinkie status: %s", model.start ? "on" : "off");
+		break;
+	case 1:
+		sprintf(ret, "Current packet number: %i", model.packet.header.sequence);
+		break;
+	}
+}
+
 #define CC_VOLTAGE_LOW   500
 #define CC_VOLTAGE_HIGH  2000
 
@@ -245,7 +257,7 @@ static void model_thread(void *arg1, void *arg2, void *arg3)
 						w = uart_fifo_fill(sm->dev, (const uint8_t *)&sm->packet + i, PACKET_BYTE_SIZE - i);
 						if (w <= 0) {
 							stop_timer++;
-							k_usleep(500);
+							k_usleep(sm->sleep_time);
 	//						LOG_ERR("ERROR: No receiver connected. Twinkie turning off.");
 							if (stop_timer > 100 && sm->auto_stop)
 							{

@@ -323,39 +323,11 @@ int view_init(void)
 
 	view_obj.flags = ATOMIC_INIT(0);
 
-	return 0;
-}
-
-void main(void)
-{
-	const struct device *dev_pd_analyzer = DEVICE_DT_GET(DT_CHOSEN(zephyr_console));
-
-	if (usb_enable(NULL)) {
-		return;
-	}
-/*
-	const struct device *dev;
-	uint32_t dtr = 0;
-
-	dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_shell_uart));
-	if (!device_is_ready(dev) || usb_enable(NULL)) {
-		return;
-	}
-
-	while (!dtr) {
-		uart_line_ctrl_get(dev, UART_LINE_CTRL_DTR, &dtr);
-		k_sleep(K_MSEC(100));
-	}
-*/
-	meas_init();
-	controls_init();
-	model_init(dev_pd_analyzer);
-	view_init();
-
 	smf_set_initial(SMF_CTX(&view_obj), &view_states[SNOOP0]);
 
         while(1) {
                 smf_run_state(SMF_CTX(&view_obj));
                 k_sleep(view_obj.timeout);
         }
+	return 0;
 }
